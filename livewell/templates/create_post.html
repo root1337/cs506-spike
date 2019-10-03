@@ -31,6 +31,84 @@
                         {{ form.content(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
+                <div class="form-group">
+                    {{ form.rent.label(class="form-control-label") }}
+                    {% if form.rent.errors %}
+                        {{ form.rent(class="form-control form-control-lg is-invalid", type="number") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.rent.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">$</span>
+                            </div>
+                            {{ form.rent(class="form-control form-control-lg", type="number") }}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.address.label(class="form-control-label") }}
+                    {% if form.address.errors %}
+                        {{ form.address(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.address.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.address(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <span class="mr-2">{{ form.gender_filter.label(class="form-check-label") }}</span>
+                    {% if form.gender_filter.errors %}
+                        {% for subfield in form.gender_filter %}
+                            <div class="form-check form-check-inline">
+                                {{ subfield(class="form-check-input is-invalid") }}
+                                {{ subfield.label(class="form-check-label") }}
+                            </div>
+                        {% endfor %}
+                        <div class="invalid-feedback">
+                            {% for error in form.gender_filter.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {% for subfield in form.gender_filter %}
+                            <div class="form-check form-check-inline">
+                                {{ subfield(class="form-check-input") }}
+                                {{ subfield.label(class="form-check-label") }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {% if form.pet_filter.errors %}
+                        {{ form.pet_filter(class="form-check is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.pet_filter.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="form-check form-check-inline">
+                            {{ form.pet_filter(class="form-check-input form-check") }}
+                            {{ form.pet_filter.label(class="form-check-label") }}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.picture.label() }}
+                    {{ form.picture(class="form-control-file form-control-sm") }}
+                    {% if form.picture.errors %}
+                        {% for error in form.picture.errors %}
+                            <span class="text-danger">{{ error }}</span><br>
+                        {% endfor %}
+                    {% endif %}
+                </div>
             </fieldset>
             <div class="form-group">
                 {{ form.submit(class="btn btn-outline-info") }}

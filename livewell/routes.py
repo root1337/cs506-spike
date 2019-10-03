@@ -64,8 +64,8 @@ def save_picture(form_picture):
     picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
 
     # resize picture
-    output_size = (125, 125) 
-    i = Image.open(form_picture) 
+    output_size = (125, 125)
+    i = Image.open(form_picture)
     i.thumbnail(output_size)
     i.save(picture_path)
     
@@ -96,7 +96,11 @@ def account():
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(title=form.title.data, content=form.content.data, author=current_user)
+
+        post = Post(title=form.title.data, content=form.content.data, author=current_user, 
+                    rent=form.rent.data, availability=True, address=form.address.data, 
+                    pet_filter=form.pet_filter.data, gender_filter=int(form.gender_filter.data), picture=form.picture.data)
+
         db.session.add(post)
         db.session.commit()
         flash('Your post has been created!', 'success')

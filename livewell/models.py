@@ -25,8 +25,17 @@ class Post(db.Model):
     title = db.Column(db.String(100), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False,
                             default=datetime.utcnow)
-    content = db.Column(db.Text, nullable=False)
+    content = db.Column(db.Text, nullable=False) #description
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
+    # House stuff
+    rent = db.Column(db.Float, nullable=False)
+    availability = db.Column(db.Boolean, nullable=False)
+    address = db.Column(db.String(140), nullable=False)
+    gender_filter = db.Column(db.Integer, nullable=False)
+    pet_filter = db.Column(db.Boolean, nullable=False)
+    picture = db.Column(db.String(140), nullable=True) # link to file hosting website
+    #images = db.relationship('Image', backref='post', lazy=True)
+
     def __repr__(self):
-        return f"Post('{self.title}', '{self.date_posted}')"
+        return f"Post('{self.title}', '{self.rent}', '{self.date_posted}')"
