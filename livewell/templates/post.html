@@ -15,6 +15,11 @@
             </div>
             <h2 class="article-title" >{{ post.title }}</h2>
             <p class="article-content">{{ post.content }}</p>
+            {% for pic in pics %}
+                <a href="{{ pic }}" target="_blank">
+                    <img src="{{ pic }}" alt="" style="max-width:90%; max-height:90%;" class="img-fluid mb-2">
+                </a>
+            {% endfor %}
         </div>
     </article>
 

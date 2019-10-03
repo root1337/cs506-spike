@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, DecimalField, RadioField, MultipleFileField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, DecimalField, RadioField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from livewell.models import User
 
@@ -60,9 +60,9 @@ class UpdateAccountForm(FlaskForm):
 class PostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     content = TextAreaField('Description', validators=[DataRequired()])
-    rent = DecimalField('Monthly Total Rent', places=2, validators=[DataRequired()])
+    rent = DecimalField('Monthly Total Rent', places=0, validators=[DataRequired()])
     address = StringField('Street Address', validators=[DataRequired(), Length(max=140)])
-    gender_filter = RadioField('Limit By Gender:', choices=[(0, 'No preference'), (1, 'Males only'), (2, 'Females only')], coerce=int, default='0')  #, validators=[DataRequired()])
-    pet_filter = BooleanField('Pets Allowed')
-    picture = StringField('Picture', validators=[Length(max=140)])
+    gender_filter = RadioField('Gender Preference:', choices=[(0, 'No preference'), (1, 'Males only'), (2, 'Females only')], coerce=int, default='0')  #, validators=[DataRequired()])
+    pet_filter = BooleanField('Pets Allowed?')
+    picture = StringField('URLs of Pictures')
     submit = SubmitField('Post')

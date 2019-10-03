@@ -111,7 +111,8 @@ def new_post():
 @app.route('/post/<int:post_id>')
 def postPage(post_id):
     post = Post.query.get_or_404(post_id)
-    return render_template('post.html', title=post.title, post=post)
+    pics = post.picture.split(', ')
+    return render_template('post.html', title=post.title, post=post, pics=pics)
 
 @app.route('/post/<int:post_id>/update', methods=['GET', 'POST'])
 @login_required
@@ -123,12 +124,22 @@ def update_post(post_id):
     if form.validate_on_submit():
         post.title = form.title.data
         post.content = form.content.data
+        post.address = form.address.data
+        post.gender_filter = form.gender_filter.data
+        post.pet_filter = form.pet_filter.data
+        post.picture = form.picture.data
+        post.rent = form.rent.data
         db.session.commit()
         flash('Your post has been updated', 'success')
         return redirect(url_for('postPage', post_id=post.id))
     elif request.method == 'GET':
         form.title.data = post.title
         form.content.data = post.content
+        form.address.data = post.address
+        form.gender_filter.data = post.gender_filter
+        form.pet_filter.data = post.pet_filter
+        form.picture.data = post.picture
+        form.rent.data = post.rent
     return render_template('create_post.html', title='Update Post', form=form, legend='Update Post')
 
 

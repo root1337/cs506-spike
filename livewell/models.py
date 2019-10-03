@@ -34,7 +34,7 @@ class Post(db.Model):
     address = db.Column(db.String(140), nullable=False)
     gender_filter = db.Column(db.Integer, nullable=False)
     pet_filter = db.Column(db.Boolean, nullable=False)
-    picture = db.Column(db.String(140), nullable=True) # link to file hosting website
+    picture = db.Column(db.Text, nullable=True) # link to file hosting website
     #images = db.relationship('Image', backref='post', lazy=True)
 
     def __repr__(self):
