@@ -112,7 +112,17 @@ def new_post():
 def postPage(post_id):
     post = Post.query.get_or_404(post_id)
     pics = post.picture.split(', ')
-    return render_template('post.html', title=post.title, post=post, pics=pics)
+    rent = int(post.rent)
+    gender = {
+        0: "No Preference",
+        1: "Males Only",
+        2: "Females Only"
+    }
+    if post.pet_filter:
+        pets = "Allowed"
+    else:
+        pets = "Not Allowed"
+    return render_template('post.html', title=post.title, post=post, pics=pics, rent=rent, gender=gender.get(post.gender_filter, "Error"), pets=pets)
 
 @app.route('/post/<int:post_id>/update', methods=['GET', 'POST'])
 @login_required

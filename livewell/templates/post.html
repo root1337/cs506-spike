@@ -5,19 +5,25 @@
         <div class="media-body">
             <div class="article-metadata">
                 <a class="mr-2" href="#">{{ post.author.username }}</a>
-                <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+                <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small><br>
                 {% if post.author == current_user %}
                     <div>
                         <a href="{{ url_for('update_post', post_id=post.id) }}" class="btn btn-secondary btn-sm mt-1 mb-1">Update</a>
                         <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
                     </div>
                 {% endif %}
+                <small>Pets: {{ pets }}&emsp;Gender Preference: {{ gender }}</small>
             </div>
             <h2 class="article-title" >{{ post.title }}</h2>
             <p class="article-content">{{ post.content }}</p>
+            <p><strong>${{ rent }}</strong> / month</p>
+            <address>
+                <b>Address:</b>
+                {{ post.address }}
+            </address>
             {% for pic in pics %}
                 <a href="{{ pic }}" target="_blank">
-                    <img src="{{ pic }}" alt="" style="max-width:90%; max-height:90%;" class="img-fluid mb-2">
+                    <img src="{{ pic }}" alt="" class="img-fluid mb-2">
                 </a>
             {% endfor %}
         </div>
