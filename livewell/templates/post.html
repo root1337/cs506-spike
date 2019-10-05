@@ -29,6 +29,47 @@
         </div>
     </article>
 
+    {% if current_user.is_authenticated %}
+        <article>
+            <div class="content-section">
+                <form method="POST" action="">
+                    {{ form.hidden_tag() }}
+                    <fieldset class="form-group">
+                        <div class="form-group">
+                            {{ form.content.label(class="form-control-label") }}
+                            {% if form.content.errors %}
+                                {{ form.content(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.content.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.content(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+                    </fieldset>
+                    <div class="form-group">
+                        {{ form.submit(class="btn btn-outline-info") }}
+                    </div>
+                </form>
+            </div>
+        </article>
+    {% endif %}
+
+    {% for comment in comments %}
+    <article class="media content-section">
+        <img src="{{ url_for('static', filename='profile_pics/' + comment.author.image_file) }}" alt="" class="rounded-circle comment-img">
+        <div class="media-body">
+            <div class="article-metadata">
+                <a class="mr-2" href="#">{{ comment.author.username }}</a>
+                <small class="text-muted">{{ comment.date_posted.strftime('%Y-%m-%d') }}</small>
+            </div>
+            <p class="article-content">{{ comment.content }}</p>
+        </div>
+    </article>
+    {% endfor %}
+
     <!-- Modal -->
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

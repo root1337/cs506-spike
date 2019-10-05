@@ -3,8 +3,8 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from livewell import app, db, bcrypt
-from livewell.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
-from livewell.models import User, Post
+from livewell.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm, CommentForm
+from livewell.models import User, Post, Comment
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -108,9 +108,22 @@ def new_post():
     return render_template('create_post.html', title='New Post', form=form, legend='New Post')
 
 
-@app.route('/post/<int:post_id>')
+@app.route('/post/<int:post_id>', methods=['GET', 'POST'])
 def postPage(post_id):
     post = Post.query.get_or_404(post_id)
+
+    print(post.id)
+    form=CommentForm()
+    comments = Comment.query.filter_by(post_id=post.id)
+    if form.validate_on_submit():
+
+        comment = Comment(content=form.content.data,post_id=post_id,author=current_user)
+
+        db.session.add(comment)
+        db.session.commit()
+        flash('Comment added!', 'success')
+        return redirect(url_for('postPage',post_id=post_id))
+
     pics = post.picture.split(', ')
     rent = int(post.rent)
     gender = {
@@ -122,7 +135,7 @@ def postPage(post_id):
         pets = "Allowed"
     else:
         pets = "Not Allowed"
-    return render_template('post.html', title=post.title, post=post, pics=pics, rent=rent, gender=gender.get(post.gender_filter, "Error"), pets=pets)
+    return render_template('post.html', title=post.title, post=post, pics=pics, rent=rent, gender=gender.get(post.gender_filter, "Error"), pets=pets, form=form, comments=comments)
 
 @app.route('/post/<int:post_id>/update', methods=['GET', 'POST'])
 @login_required

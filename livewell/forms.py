@@ -66,3 +66,7 @@ class PostForm(FlaskForm):
     pet_filter = BooleanField('Pets Allowed?')
     picture = StringField('URLs of Pictures')
     submit = SubmitField('Post')
+
+class CommentForm(FlaskForm):
+    content = TextAreaField('Add Comment', validators=[DataRequired()])
+    submit = SubmitField('Submit')
